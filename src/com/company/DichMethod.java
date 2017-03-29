@@ -15,7 +15,7 @@ public class DichMethod {
         this.b = b;
     }
     public void SearchSol(){
-        double x1 = (a + b) / 2 - delta, x2 = (a + b) / 2 + delta;
+        double x1 = (a + b) / 2 - delta * (b - a), x2 = (a + b) / 2 + delta * (b - a);
         if((funcX1 = func(x1)) < (funcX2 = func(x2))){
             b = x2;
         } else if(funcX1 > funcX2){

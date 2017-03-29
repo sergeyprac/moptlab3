@@ -17,12 +17,45 @@ public class UniformMethod {
         point = new double[n + 1];
         funcRes = new double[n + 1];
         point[0] = a;
-        funcRes[0] = func(a);
+        //funcRes[0] = func(a);
         point[n] = b;
-        funcRes[n] = func(b);
+        //funcRes[n] = func(b);
+    }
+    public void SearchSolution() {
+        double step = (point[n] - point[0]) / n, fMin;
+        int numMin = 0;
+        funcRes[0] = func(point[0]);
+        funcRes[n] = func(point[n]);
+        for (int i = 1; i < n; i++) {
+            point[i] = point[i - 1] + step;
+            funcRes[i] = func(point[i]);
+        }
+        fMin = funcRes[0];
+        for (int i = 0; i < n + 1; i++) {
+            if(funcRes[i] < fMin){
+                numMin = i;
+                fMin = funcRes[i];
+            }
+        }
+        if(numMin == 0){
+            point[n] = point[1];
+        } else if(numMin == n){
+            point[0] = point[n - 1];
+        }else{
+            point[0] = point[numMin - 1];
+            point[n] = point[numMin + 1];
+        }
+        if(point[n] - point[0] > eps){
+            SearchSolution();
+        } else {
+            minX = point[0];
+            maxX = point[n];
+            minF = funcRes[numMin];
+        }
     }
 
-    public void SearchSolution() {
+
+    /*public void SearchSolution() {
         double step = (point[n] - point[0]) / n;
         int numMin = 0, pred, next;
         point[1] = point[0] + step;
@@ -34,13 +67,13 @@ public class UniformMethod {
                 funcRes[numMin + 1] = func(point[numMin + 1]);
             }
         } while (!(funcRes[numMin] < funcRes[numMin - 1] && funcRes[numMin] < funcRes[numMin + 1]) && numMin < n - 1);
-        /*for (int i = 1; i < n; i++) {
+        for (int i = 1; i < n; i++) {
             point[i] = point[i - 1] + step;
             funcRes[i] = func(point[i]);
             if(funcRes[i] < funcRes[numMin]){
                 numMin = i;
             }
-        }*/
+        }
         if (funcRes[n] < funcRes[numMin]) {
             numMin = n;
         }
@@ -68,7 +101,7 @@ public class UniformMethod {
             maxX = point[next];
             minF = funcRes[numMin];
         }
-    }
+    }*/
 
     public void Print() {
         System.out.println("n = " + n + ": " + "[" + minX + ", " + maxX + "]; " + minF + "; " + Get());

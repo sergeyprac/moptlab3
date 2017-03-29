@@ -7,27 +7,29 @@ public class Main {
     public static void main(String[] args) {
         UniformMethod obj;
         DichMethod obj1;
-        double eps, pi = Math.PI, delta;
+        double eps, pi = Math.PI, delta, a = 0, b = pi/4;
+        int n;
         Scanner in = new Scanner(System.in);
         do {
-            System.out.println("f(x) = tg(x) - 2sin(x), [0, pi/4]");
-            System.out.print("eps = ");
-            eps = in.nextDouble();
-            System.out.println("Метод равномерного поиска");
-            for (int i = 3; i < 101; i++) {
-                obj = new UniformMethod(i, eps, 0, pi / 4);
+            do {
+                System.out.println("f(x) = tg(x) - 2sin(x), [0, pi/4]");
+                System.out.print("eps = ");
+                eps = in.nextDouble();
+                System.out.print("n = ");
+                n = in.nextInt();
+                System.out.println("Метод равномерного поиска");
+                obj = new UniformMethod(n, eps, a, b);
                 obj.SearchSolution();
                 obj.Print();
-            }
-            System.out.println("Метод дихотомии");
+            } while (in.nextInt() == 1);
             do {
-                System.out.println("delta дожно быть меньше eps");
+                System.out.println("Метод дихотомии");
                 System.out.print("delta = ");
                 delta = in.nextDouble();
-            } while (delta >= eps);
-            obj1 = new DichMethod(eps, delta, 0, pi / 4);
-            obj1.SearchSol();
-            obj1.Print();
-        } while(in.nextInt() == 1);
+                obj1 = new DichMethod(eps, delta, a, b);
+                obj1.SearchSol();
+                obj1.Print();
+            } while (in.nextInt() == 1);
+        } while (in.nextInt() == 1);
     }
 }
